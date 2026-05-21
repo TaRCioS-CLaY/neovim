@@ -9,11 +9,20 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   group = group,
 })
 
+local yank_events = { "TextYankPost" }
+if vim.fn.has("nvim-0.13") > 0 then
+  table.insert(yank_events, "TextPutPost")
+end
+
 -- Destacar o texto copiado
-vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+vim.api.nvim_create_autocmd(yank_events, {
   pattern = "*",
   callback = function()
-    vim.hl.on_yank()
+    if vim.fn.has("nvim-0.13") > 0 then
+      vim.hl.hl_op({ higroup = "IncSearch", timeout = 150 })
+    else
+      vim.hl.on_yank()
+    end
 
     if vim.v.event.operator == "y" then
       -- Usar os registros para armazenar o histórico de cópias
