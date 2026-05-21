@@ -3,7 +3,7 @@ vim.pack.add({ "https://github.com/ibhagwan/fzf-lua" })
 
 require("fzf-lua").setup({
   winopts = {
-    backdrop = 100,
+    backdrop = false,
     split = "botright new | resize 15",
   },
   files = {
@@ -16,6 +16,9 @@ require("fzf-lua").setup({
   ui_select = true,
 })
 
+vim.keymap.set("n", "<leader>/", function()
+  require("fzf-lua").lines()
+end, { desc = "Pesquisar nas linhas do buffer" })
 vim.keymap.set("n", "<leader>b", function()
   require("fzf-lua").buffers()
 end, { desc = "Buffers" })

@@ -131,20 +131,13 @@ functions.keymaps_set("n", {
   },
   { "v", "<cmd>vsplit<CR>", { desc = "Dividir verticalmente" } },
   { "s", "<cmd>w<CR>", { desc = "Salvar buffer" } },
-  {
-    "/",
-    function()
-      functions.grep()
-    end,
-    { desc = "Buscar com ripgrep" },
-  },
 }, { prefix = "<leader>" })
 
--- Código
 vim.keymap.set("n", "<leader>cd", vim.diagnostic.setqflist, { desc = "Abrir erros na quickfix" })
 vim.keymap.set("n", "<leader>ci", function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = "Ativar/desativar dicas de código" })
+vim.keymap.set("n", "<leader>eg", functions.grep, { desc = "Buscar com ripgrep" })
 vim.keymap.set("n", "<leader>gw", function()
   vim.cmd.write()
   vim.system({ "git", "add", vim.fn.expand("%") })
@@ -250,9 +243,11 @@ wk.add({
   { "<leader>w", group = "Window", proxy = "<C-w>", nowait = true, remap = false },
 }, vim.tbl_extend("force", options, { mode = "n", prefix = "<leader>" }))
 
+vim.keymap.set("n", "<leader>T", "<cmd>Neoshell<CR>", { desc = "Abrir terminal neoshell" })
+
 -- Buffer
-vim.keymap.set("n", "<c-n>", "<cmd>bn<CR>", { desc = "Próximo buffer" })
-vim.keymap.set("n", "<c-p>", "<cmd>bp<CR>", { desc = "Buffer anterior" })
+-- vim.keymap.set("n", "<c-n>", "<cmd>bnext<CR>", { desc = "Próximo buffer" })
+-- vim.keymap.set("n", "<c-p>", "<cmd>bprevious<CR>", { desc = "Buffer anterior" })
 
 -- Redo
 vim.keymap.set("n", "U", "<c-r>", { desc = "Refazer" })
